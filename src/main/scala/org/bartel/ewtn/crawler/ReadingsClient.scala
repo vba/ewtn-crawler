@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.{DeserializationFeature, JsonNode, ObjectM
 import com.fasterxml.jackson.databind.util.JSONPObject
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
-import org.bartel.ewtn.crawler.dto.ReadingTree
+import org.bartel.ewtn.crawler.dto.ewtn.ReadingTree
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
