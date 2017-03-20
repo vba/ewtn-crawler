@@ -1,11 +1,16 @@
 package org.bartel.ewtn.crawler
 
-import java.time.LocalDate
+import rx.lang.scala.Observable
 
 object App {
     def main(args: Array[String]): Unit = {
 
-        val first = ReadingsClient.instance.getReading(LocalDate.now()).toBlocking.first()
-        println(first)
+        Observable
+            .from(DatesProvider.provide())
+            .flatMap(ReadingsClient.instance.getReading)
+            .map(ReadingsMapper.map)
+
+
+        println(1)
     }
 }

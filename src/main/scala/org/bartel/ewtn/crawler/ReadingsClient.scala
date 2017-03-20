@@ -3,6 +3,8 @@ package org.bartel.ewtn.crawler
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, LocalDateTime}
 
+import org.bartel.ewtn.crawler.utils.FunctionalUtils._
+import rx.lang.scala.JavaConversions._
 import com.fasterxml.jackson.databind.{DeserializationFeature, JsonNode, ObjectMapper}
 import com.fasterxml.jackson.databind.util.JSONPObject
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
@@ -13,7 +15,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.http.{GET, Path}
 import rx.Observable
-
+import rx.lang.scala
 
 
 
@@ -25,9 +27,9 @@ trait EwtnClient {
 class ReadingsClient(private val ewtnClientGetter: () => EwtnClient) {
     private lazy val ewtnClient: EwtnClient = { ewtnClientGetter() }
 
-    def getReading(day: LocalDate): Observable[ReadingTree] = {
+    def getReading(day: LocalDate): scala.Observable[ReadingTree] = {
         val date = day.format(DateTimeFormatter.ofPattern("yyyy-M-d"))
-        ewtnClient.getReading(date)
+        toScalaObservable(ewtnClient.getReading(date))
     }
 }
 

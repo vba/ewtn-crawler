@@ -12,5 +12,6 @@ class DatesProvider(private val endOfYear: LocalDate = LocalDate.of(LocalDate.no
 }
 
 object DatesProvider {
-
+    val datesProvider = new DatesProvider()
+    def provide(): Seq[LocalDate] = datesProvider.provide()
 }
