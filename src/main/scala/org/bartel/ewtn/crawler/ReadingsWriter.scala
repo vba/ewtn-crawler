@@ -1,11 +1,8 @@
 package org.bartel.ewtn.crawler
 
-import java.io.File
 import java.nio.file.{Files, Paths}
 import java.time.LocalDate
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
-import com.fasterxml.jackson.databind.JsonNode
 import org.bartel.ewtn.crawler.dto.Readings
 import org.bartel.ewtn.crawler.utils.JsonUtils
 
@@ -17,7 +14,7 @@ class ReadingsWriter private[crawler]() {
         Files.createDirectories(dir)
         Files.createFile(file)
 
-        val writer = JsonUtils.objectMapper.writer(new DefaultPrettyPrinter())
+        val writer = JsonUtils.objectMapper.writer()
         writer.writeValue(file.toFile, readings.map(_.toMap).toArray)
     }
 }
