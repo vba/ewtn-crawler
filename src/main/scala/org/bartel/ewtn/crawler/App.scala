@@ -10,14 +10,19 @@ object App {
         Observable
             .from(DatesProvider.provide())
             .flatMap(ReadingsClient.instance.getReading)
+            .retry(3)
+            //.onErrorResumeNext(e => Observable.empty)
             .map(ReadingsMapper.map)
+            .foldLeft(List[Readings]())((acc, x) =>  x :: acc)
             .subscribeOn(IOScheduler.apply())
-            .subscribe(onNext = x => {println(x)}, onError = e => {println(e)}, onCompleted = () => {break = true})
+            .subscribe(
+                x => ReadingsWriter.write(x),
+                e => println(s"[Error] $e"),
+                () => break = true
+            )
 
         while (!break) {
             Thread.sleep(500)
         }
-
-        //ReadingsWriter.write(readings)
     }
 }
